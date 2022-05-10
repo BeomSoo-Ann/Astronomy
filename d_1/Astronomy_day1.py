@@ -2,20 +2,24 @@ import astropy.io.fits as fits
 import numpy as np
 import matplotlib.pyplot as plt
 
-structure = fits.open('C:/Users/BumLahm/Desktop/Programing/Astronomy_2/swap_lv1_20120606_040010.fits')
-data1 = structure[0].data
-header1 = structure[0].header
+image_data = fits.open(
+    '/Users/annbeomsu/projects/Astronomy/d_1/swap_lv1_20120606_000010.fits')
+data = image_data[0].data
+header = image_data[0].header
 
 
-o_image = np.array(data1)
-image = np.log(o_image)
+# 오류창 제거를 위한 코드
+# error --> RuntimeWarning: divide by zero encountered in log
+np.seterr(divide='ignore')
+
+# o_image = np.array(data)
+# 데이터를 로그 스캐일로 전환
+image = np.log(np.array(data))
+
 max_value = np.percentile(image, 100)
 min_value = np.percentile(image, 30)
-plt.figure(figsize=(5,5))
-plt.imshow(image,cmap='hot',origin='lower',vmax=max_value,vmin=min_value)
+plt.figure(figsize=(8, 8))
+plt.imshow(image, cmap='hot', origin='lower', vmax=max_value, vmin=min_value)
 plt.show()
 
-arcsec = int(header1['CDELT1'])
-
-#vinus = [394,691], [549,680], [710,677]
-#solar_active = [419, 581], [434,581],[440,581]
+arcsec = int(header['CDELT1'])
