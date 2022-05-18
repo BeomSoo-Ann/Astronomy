@@ -15,9 +15,9 @@ np.seterr(divide='ignore')
 # o_image = np.array(data)
 # 데이터를 로그 스캐일로 전환
 image = np.log(np.array(data))
-
 max_value = np.percentile(image, 100)
 min_value = np.percentile(image, 30)
+
 plt.figure(figsize=(8, 8))
 plt.imshow(image, cmap='hot', origin='lower', vmax=max_value, vmin=min_value)
 plt.show()
